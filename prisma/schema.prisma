@@ -1,10 +1,11 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["tracing"]
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgres"
+  url      = "postgresql://vaibhav:VDD11bg95wLgTRXo@prisha-pg.postgres.database.azure.com/proximitytest?sslmode=require"
 }
 
 model User {
