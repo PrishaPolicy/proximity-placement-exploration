@@ -12,18 +12,17 @@ const userData: Prisma.UserCreateInput[] = [...Array(1000)].map((_, i) => {
   return {
     name: data.username,
     email: data.email,
-    posts: {
-      create: [...Array(10)].map(() => {
-        return {
-          title: randCatchPhrase(),
-          content: randLines(),
-          published: randBoolean(),
-        };
-      }),
-    },
   };
 });
 
+const postData: Prisma.PostCreateInput[] = [...Array(1000000)].map((_, i) => {
+  const data = randCatchPhrase();
+  return {
+    title: data,
+    published: randBoolean(),
+    content: randLines(),
+  };
+});
 async function main() {
   console.log(`Start seeding ...`);
 
@@ -35,6 +34,9 @@ async function main() {
       console.log(`Created user with id: ${user.id}`);
     })
   );
+  await prisma.post.createMany({
+    data: postData,
+  });
   console.log(`Seeding finished.`);
 }
 

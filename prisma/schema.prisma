@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgres"
-  url      = "postgresql://vaibhav:VDD11bg95wLgTRXo@prisha-pg.postgres.database.azure.com/proximitytest?sslmode=require"
+  url      = "postgresql://postgres:QbhFAn66u7lzGlmec41U@backend-core-db-nightly.c89cbkl8ihmx.ap-south-1.rds.amazonaws.com/backend-core-db-nightly"
 }
 
 model User {
