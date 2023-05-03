@@ -15,17 +15,12 @@ const userData: Prisma.UserCreateInput[] = [...Array(100)].map((_, i) => {
   };
 });
 
-const postData: Prisma.PostCreateInput[] = [...Array(1000)].map((_, i) => {
-  const data = randCatchPhrase();
+const postData: Prisma.PostCreateManyInput[] = [...Array(1000)].map((_, i) => {
   return {
-    title: data,
+    title: randCatchPhrase(),
     published: randBoolean(),
     content: randLines(),
-    author: {
-      connect: {
-        id: Math.floor(Math.random() * 11) + 1,
-      },
-    },
+    authorId: Math.floor(Math.random() * 11) + 1,
   };
 });
 async function main() {
