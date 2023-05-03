@@ -7,7 +7,7 @@ import {
 } from "@ngneat/falso";
 const prisma = new PrismaClient();
 
-const userData: Prisma.UserCreateInput[] = [...Array(1000)].map((_, i) => {
+const userData: Prisma.UserCreateInput[] = [...Array(100)].map((_, i) => {
   const data = randUser();
   return {
     name: data.username,
@@ -15,25 +15,26 @@ const userData: Prisma.UserCreateInput[] = [...Array(1000)].map((_, i) => {
   };
 });
 
-const postData: Prisma.PostCreateInput[] = [...Array(1000000)].map((_, i) => {
+const postData: Prisma.PostCreateInput[] = [...Array(1000)].map((_, i) => {
   const data = randCatchPhrase();
   return {
     title: data,
     published: randBoolean(),
     content: randLines(),
+    author: {
+      connect: {
+        id: Math.floor(Math.random() * 11) + 1,
+      },
+    },
   };
 });
 async function main() {
   console.log(`Start seeding ...`);
 
-  await Promise.all(
-    userData.map(async (u) => {
-      const user = await prisma.user.create({
-        data: u,
-      });
-      console.log(`Created user with id: ${user.id}`);
-    })
-  );
+  const user = await prisma.user.createMany({
+    data: userData,
+  });
+
   await prisma.post.createMany({
     data: postData,
   });
